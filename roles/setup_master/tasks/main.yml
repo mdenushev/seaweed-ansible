@@ -10,13 +10,16 @@
   ansible.builtin.template:
     src: templates/seaweed_master.service.j2
     dest: /etc/systemd/system/seaweed_master.service
+  register: weed_master_service_def
 
 - name: Systemd daemon reload
   ansible.builtin.systemd:
     daemon_reload: true
+  when: weed_master_service_def is changed
 
 - name: Restart master seaweed service
   ansible.builtin.systemd:
     name: seaweed_master.service
     state: restarted
     enabled: true
+  when: weed_master_service_def is changed

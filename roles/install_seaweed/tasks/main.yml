@@ -22,10 +22,6 @@
     or weed_version not in weed_version_check.stdout
   register: weed_download_check
 
-- name: debug
-  ansible.builtin.debug:
-    var: weed_version_check, weed_download_check
-
 - name: Move weed binary into place.
   copy:
     src: "/tmp/weed"

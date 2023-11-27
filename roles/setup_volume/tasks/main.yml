@@ -13,13 +13,16 @@
   ansible.builtin.template:
     src: templates/seaweed_volume.service.j2
     dest: /etc/systemd/system/seaweed_volume.service
+  register: weed_volume_service_def
 
 - name: Systemd daemon reload
   ansible.builtin.systemd:
     daemon_reload: true
+  when: weed_volume_service_def is changed
 
 - name: Restart volume seaweed service
   ansible.builtin.systemd:
     name: seaweed_volume.service
     state: restarted
     enabled: true
+  when: weed_volume_service_def is changed
