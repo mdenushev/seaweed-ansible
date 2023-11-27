@@ -1,0 +1,11 @@
+---
+- name: Test new role from within this playbook
+  hosts: localhost
+  gather_facts: false
+  vars:
+    weed_large_disk: False
+  tasks:
+    - name: Testing role
+      ansible.builtin.include_role:
+        name: install_seaweed
+        tasks_from: config-version.yaml

@@ -1,0 +1,17 @@
+[Unit]
+Description=SeaweedFS Master
+
+[Service]
+TimeoutStartSec=0
+User=seaweed
+ExecStart={{ weed_bin_path }} master -mdir={{ weed_master_dir }} \
+{% if weed_master_peers|length %}
+    -peers={{ weed_master_peers }} \
+{% endif %}
+{% if weed_master_metrics_port is defined %}
+    -metricsPort={{ weed_master_metrics_port }} \
+{% endif %}
+{{ weed_master_options }}
+
+[Install]
+WantedBy=multi-user.target

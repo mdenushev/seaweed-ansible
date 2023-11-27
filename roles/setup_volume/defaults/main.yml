@@ -1,0 +1,9 @@
+---
+weed_master_peers: ip1:9333,ip2:9333,ip3:9333
+weed_volume_dirs:
+  - /data/seaweed/volume
+weed_volume_metrics_port: 9103
+weed_bin_path: /usr/local/bin/weed
+weed_volume_options: ''
+weed_volume_datacenter: ''
+weed_volume_rack: ''

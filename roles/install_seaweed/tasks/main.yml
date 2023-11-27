@@ -1,0 +1,43 @@
+---
+- name: Check current weed version.
+  command: "{{ weed_bin_path }} version"
+  failed_when: false
+  changed_when: false
+  register: weed_version_check
+
+- name: Configure latest version
+  include_tasks: config-version.yaml
+  when: >
+    weed_version is match("latest")
+    or weed_version is not defined
+
+- name: Download and unarchive weed into temporary location.
+  unarchive:
+    src: "{{ weed_download_url }}"
+    dest: /tmp
+    remote_src: true
+    mode: 0755
+  when: >
+    weed_version_check.stdout is not defined
+    or weed_version not in weed_version_check.stdout
+  register: weed_download_check
+
+- name: debug
+  ansible.builtin.debug:
+    var: weed_version_check, weed_download_check
+
+- name: Move weed binary into place.
+  copy:
+    src: "/tmp/weed"
+    dest: "{{ weed_bin_path }}"
+    mode: 0755
+    remote_src: true
+  when:
+    weed_download_check is changed
+#  notify: restart weed
+
+- name: Create seaweed user.
+  user:
+    name: seaweed
+    shell: /sbin/nologin
+    state: present

@@ -1,0 +1,25 @@
+---
+- name: Change ownership of dir folders
+  file:
+    path: "{{ volume_dir }}"
+    state: directory
+    owner: seaweed
+    mode: '0755'
+  loop: "{{ weed_volume_dirs }}"
+  loop_control:
+    loop_var: "volume_dir"
+
+- name: Generate volume systemd service
+  ansible.builtin.template:
+    src: templates/seaweed_volume.service.j2
+    dest: /etc/systemd/system/seaweed_volume.service
+
+- name: Systemd daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart volume seaweed service
+  ansible.builtin.systemd:
+    name: seaweed_volume.service
+    state: restarted
+    enabled: true

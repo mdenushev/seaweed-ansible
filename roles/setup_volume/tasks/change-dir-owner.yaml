@@ -1,0 +1,6 @@
+- name: Change volume dir ownership - {{ volume_dir }}
+  file:
+    path: "{{ volume_dir }}"
+    state: directory
+    owner: seaweed
+    mode: '0755'

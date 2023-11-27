@@ -1,0 +1,21 @@
+[Unit]
+Description=SeaweedFS Volume
+
+[Service]
+TimeoutStartSec=0
+User=seaweed
+ExecStart={{ weed_bin_path }} volume -mserver={{ weed_master_peers }} \
+    -dir={{ weed_volume_dirs | join(',') }} \
+{% if weed_volume_datacenter|length %}
+    -dataCenter={{ weed_volume_datacenter }} \
+{% endif %}
+{% if weed_volume_rack|length %}
+    -rack={{ weed_volume_rack }} \
+{% endif %}
+{% if weed_volume_metrics_port is defined %}
+    -metricsPort={{ weed_volume_metrics_port }} \
+{% endif %}
+{{ weed_volume_options }}
+
+[Install]
+WantedBy=multi-user.target

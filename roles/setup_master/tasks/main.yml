@@ -1,0 +1,22 @@
+---
+- name: Create master dir if not exists
+  file:
+    path: "{{ weed_master_dir }}"
+    state: directory
+    owner: seaweed
+    mode: '0755'
+
+- name: Generate master systemd service
+  ansible.builtin.template:
+    src: templates/seaweed_master.service.j2
+    dest: /etc/systemd/system/seaweed_master.service
+
+- name: Systemd daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart master seaweed service
+  ansible.builtin.systemd:
+    name: seaweed_master.service
+    state: restarted
+    enabled: true
