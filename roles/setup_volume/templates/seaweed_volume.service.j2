@@ -6,11 +6,14 @@ TimeoutStartSec=0
 User=seaweed
 ExecStart={{ weed_bin_path }} volume -mserver={{ weed_master_peers }} \
     -dir={{ weed_volume_dirs | join(',') }} \
+{% if weed_volume_max is defined %}
+    -max={{ weed_volume_max }} \
+{% endif %}
 {% if weed_volume_datacenter|length %}
-    -dataCenter={{ weed_volume_datacenter }} \
+    -dataCenter={{ weed_datacenter }} \
 {% endif %}
 {% if weed_volume_rack|length %}
-    -rack={{ weed_volume_rack }} \
+    -rack={{ weed_rack }} \
 {% endif %}
 {% if weed_volume_metrics_port is defined %}
     -metricsPort={{ weed_volume_metrics_port }} \

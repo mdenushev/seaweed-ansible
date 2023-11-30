@@ -1,0 +1,12 @@
+---
+# defaults file for setup_filer
+weed_master_peers: ip1:9333,ip2:9333,ip3:9333
+weed_filer_ip: ip
+weed_filer_port: 8333
+weed_filer_metrics_port: 9104
+weed_bin_path: /usr/local/bin/weed
+weed_filer_options: ''
+weed_filer_datacenter: ''
+weed_filer_rack: ''
+weed_filer_config_path: /etc/seaweedfs/filer.toml
+weed_filer_config_template: templates/filer.toml.j2

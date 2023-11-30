@@ -1,0 +1,26 @@
+---
+# tasks file for setup_filer
+---
+- name: Generate filer systemd service
+  ansible.builtin.template:
+    src: templates/seaweed_filer.service.j2
+    dest: /etc/systemd/system/seaweed_filer.service
+  register: weed_filer_service_def
+
+- name: Generate filer config
+  ansible.builtin.template:
+    src: "{{ weed_filer_config_template }}"
+    dest: "{{ weed_filer_config_path }}"
+  register: weed_filer_conf_def
+
+- name: Systemd daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: weed_filer_service_def is changed
+
+- name: Restart filer seaweed service
+  ansible.builtin.systemd:
+    name: seaweed_filer.service
+    state: restarted
+    enabled: true
+  when: weed_filer_service_def is changed or weed_filer_conf_def is changed

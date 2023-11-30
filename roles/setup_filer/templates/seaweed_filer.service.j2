@@ -1,0 +1,23 @@
+[Unit]
+Description=SeaweedFS Filer
+
+[Service]
+TimeoutStartSec=0
+User=seaweed
+ExecStart={{ weed_bin_path }} filer -ip={{ weed_filer_ip }} -port={{ weed_filer_port }}  \
+{% if weed_master_peers|length %}
+    -master={{ weed_master_peers }} \
+{% endif %}
+{% if weed_filer_datacenter|length %}
+    -dataCenter={{ weed_datacenter }} \
+{% endif %}
+{% if weed_filer_rack|length %}
+    -rack={{ weed_rack }} \
+{% endif %}
+{% if weed_filer_metrics_port is defined %}
+    -metricsPort={{ weed_filer_metrics_port }} \
+{% endif %}
+{{ weed_filer_options }}
+
+[Install]
+WantedBy=multi-user.target
