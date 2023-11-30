@@ -9,10 +9,10 @@ ExecStart={{ weed_bin_path }} volume -mserver={{ weed_master_peers }} \
 {% if weed_volume_max is defined %}
     -max={{ weed_volume_max }} \
 {% endif %}
-{% if weed_volume_datacenter|length %}
+{% if weed_datacenter|length %}
     -dataCenter={{ weed_datacenter }} \
 {% endif %}
-{% if weed_volume_rack|length %}
+{% if weed_rack|length %}
     -rack={{ weed_rack }} \
 {% endif %}
 {% if weed_volume_metrics_port is defined %}
