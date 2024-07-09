@@ -1,2 +1,7 @@
 ---
 # defaults file for install_seaweed
+weed_version: '3.59'
+weed_large_disk: false
+weed_arch: 'amd64'
+weed_download_url: https://github.com/seaweedfs/seaweedfs/releases/download/{{ weed_version }}/linux_{{ weed_arch }}{{ '_large_disk' if weed_large_disk else ''}}.tar.gz
+weed_bin_path: /usr/local/bin/weed

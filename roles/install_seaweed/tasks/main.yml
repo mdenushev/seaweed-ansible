@@ -30,7 +30,6 @@
     remote_src: true
   when:
     weed_download_check is changed
-#  notify: restart weed
 
 - name: Create seaweed user.
   user:
