@@ -1,4 +1,10 @@
 ---
+- name: Check filer config path exists
+  ansible.builtin.file:
+    state: directory
+    path: "{{ weed_filer_config_path | dirname }}"
+    mode: '0755'
+
 - name: Generate filer systemd service
   ansible.builtin.template:
     src: templates/seaweed_filer.service.j2
